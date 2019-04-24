@@ -1,0 +1,18 @@
+#! /usr/bin/env bash
+
+set -euo pipefail
+
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
+
+display() {
+  git log --format:'%an%x00%B%x00'
+}
+
+main() {
+  source "$dir/util.bash"
+  setup "$@"
+  "$dir"/gitchat-fetch "$@"
+  display
+}
+
+main "$@"

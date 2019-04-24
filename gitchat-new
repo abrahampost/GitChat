@@ -1,0 +1,31 @@
+#! /usr/bin/env bash
+
+set -euo pipefail
+
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
+
+# expects message text on standard in
+new_message() {
+  local file
+  file="$(userfile)"
+  if ! [[ -e "$file" ]] ; then
+    touch "$file"
+  elif [[ -z "$(< "$file" )" ]] ; then
+    out 'a' > "$file"
+  else
+    ed "$file" <<EOF
+global/^/d
+wq
+EOF
+  fi
+  git add "$file"
+  git commit --quiet -F -
+}
+
+main() {
+  source "$dir/util.bash"
+  setup "$@"
+  new_message
+}
+
+main "$@"

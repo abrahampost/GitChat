@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+
+set -euo pipefail
+
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
+
+fetch() {
+  git pull --quiet
+}
+
+main() {
+  source "$dir/util.bash"
+  setup "$@"
+  fetch
+}
+
+main "$@"
