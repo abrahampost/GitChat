@@ -1,24 +1,49 @@
-import argparse
+import sys, subprocess
 
-def make_parser():
-    parser = argparse.ArgumentParser(description='Chat with your friends using commit messages')
-    sp = parser.add_subparsers()
-    display=sp.add_parser('display', help='display all recent commit messages', parents=[parser])
-    message=sp.add_parser('message', help='send a message to the repository', parents=[parser])
-    message.add_argument('--display', action='store_true', default=False, help='display all recent commit messages')
-    #parser.add_argument('--message', nargs=argparse.REMAINDER, default=[], help='send a message to the repository')
-    return parser
+def main():    
+    args = parse()
+    if args.get('message'):
+        send_message(args['message'])
+    elif args.get('display'):
+        display_messages()
 
-parser = make_parser()
-args = parser.parse_args()
+def parse():
+    args = sys.argv
+    parsed_args = {}
+    if len(args) <= 1:
+        error_message()
+    if args[1] == "display":
+        parsed_args['display'] = True
+    elif args[1] == "message":
+        parsed_args['message'] = " ".join(args[2:])
+    elif args[1] in ('-h', '--help'):
+        help_message()
+    
+    return parsed_args
 
-print(parser)
+def send_message(message):
+    print("Sending message " + message)
 
-if args.message:
-    message = " ".join(args.message)
-    print(message)
-elif args.display:
-    # display something here
-    print("I recognized a display")
-else:
-    print("unrecognize command")
+def display_messages():
+    print("Displaying messages")
+
+# Generic messages
+def help_message():
+    print("""
+GitChat
+Chat with your friends using git commit messages
+
+COMMANDS:
+display -- displays recent messages
+message <message to send> -- send a message to the repository
+    """)
+    sys.exit()
+
+def error_message():
+    print("""
+    ERROR: correct usage is 'chat <display> | <message> <message to be sent>'
+    """)
+    sys.exit()
+
+if __name__ == '__main__':
+    main()
