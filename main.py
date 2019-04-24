@@ -22,10 +22,12 @@ def parse():
     return parsed_args
 
 def send_message(message):
-    print("Sending message " + message)
+    process = subprocess.Popen(["gitchat-new"], stdin=subprocess.PIPE)
+    process.stdin.write(message)
+    process.stdin.close()
 
 def display_messages():
-    print("Displaying messages")
+    subprocess.run(['gitchat-display'])
 
 # Generic messages
 def help_message():
