@@ -9,10 +9,13 @@ new_message() {
   local file
   file="$(userfile)"
   if ! [[ -e "$file" ]] ; then
+    # file does not exist: create file
     touch "$file"
-  elif [[ -z "$(< "$file" )" ]] ; then
+  elif ! [[ -s "$file" ]] ; then
+    # file is empty: give it content
     out 'a' > "$file"
   else
+    # file has content: remove it
     ed -s "$file" <<EOF
 g/^/d
 wq
