@@ -24,6 +24,7 @@ EOF
   fi
   git add "$file"
   git commit --quiet -F -
+  git push --quiet
 }
 
 main() {
