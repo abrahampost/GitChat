@@ -3,6 +3,7 @@
 set -euo pipefail
 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
+source "$dir/util.bash"
 
 # expects message text on standard in
 new_message() {
@@ -26,7 +27,6 @@ EOF
 }
 
 main() {
-  source "$dir/util.bash"
   setup "$@"
   new_message
 }
