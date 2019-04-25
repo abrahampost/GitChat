@@ -13,8 +13,8 @@ new_message() {
   elif [[ -z "$(< "$file" )" ]] ; then
     out 'a' > "$file"
   else
-    ed "$file" <<EOF
-global/^/d
+    ed -s "$file" <<EOF
+g/^/d
 wq
 EOF
   fi
