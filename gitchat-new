@@ -5,10 +5,8 @@ set -euo pipefail
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
 source "$dir/util.bash"
 
-# expects message text on standard in
-new_message() {
-  local file
-  file="$(userfile)"
+do_change() {
+  local file="$1"
   if ! [[ -e "$file" ]] ; then
     # file does not exist: create file
     touch "$file"
@@ -22,6 +20,14 @@ g/^/d
 wq
 EOF
   fi
+
+}
+
+# expects message text on standard in
+new_message() {
+  local file
+  file="$(userfile)"
+  do_change "$file"
   git add "$file"
   git commit --quiet -F -
   git push --quiet
