@@ -35,6 +35,8 @@ new_message() {
 
 main() {
   setup "$@"
+  # fetch new messages first
+  "$dir"/gitchat-fetch "$@"
   new_message
 }
 
