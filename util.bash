@@ -22,28 +22,19 @@ verify_args() {
 
 # 1: org/repo
 repo_name() {
-  if (( $# == 0 )) ; then
-    err 'No repo name'
-    die 1
-  fi
+  verify_args "$@"
   printf '%s\n' ~/.chat/"$( dirname "$1" )-$( basename "$1" )"
 }
 
 # 1: org/repo
 github_name() {
-  if (( $# == 0 )) ; then
-    err 'No repo name'
-    die 1
-  fi
+  verify_args "$@"
   printf '%s\n' https://github.com/"$1"
 }
 
 # 1: org/repo
 cd_repo() {
-  if (( $# == 0 )) ; then
-    err 'No repo name'
-    die 1
-  fi
+  verify_args "$@"
   local dir
   dir="$(repo_name "$1")"
   if ! cd "$dir" ; then
@@ -54,19 +45,13 @@ cd_repo() {
 
 # 1: org/repo
 repo_exists() {
-  if (( $# == 0 )) ; then
-    err 'No repo name'
-    die 1
-  fi
+  verify_args "$@"
   [[ -e "$(repo_name "$1")" ]]
 }
 
 # 1: org/repo
 clone_repo() {
-  if (( $# == 0 )) ; then
-    err 'No repo name'
-    die 1
-  fi
+  verify_args "$@"
   git clone --quiet "$(github_name "$1")" "$(repo_name "$1")"
 }
 
