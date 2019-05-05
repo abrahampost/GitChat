@@ -9,7 +9,7 @@ err() {
 }
 
 out() {
-  printf '%\n' "$@"
+  printf '%s\n' "$@"
 }
 
 verify_args() {

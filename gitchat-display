@@ -6,7 +6,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}")" && pwd )"
 source "$dir/util.bash"
 
 display() {
-  git log --format:'%an%x00%B%x00'
+  git log --format='%an%x00%B%x00'
 }
 
 main() {
