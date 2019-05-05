@@ -33,10 +33,16 @@ new_message() {
   git push --quiet
 }
 
+is_not_empty() {
+  git log 2>/dev/null 1>&2
+}
+
 main() {
   setup "$@"
-  # fetch new messages first
-  "$dir"/gitchat-fetch "$@"
+  if is_not_empty ; then
+    # fetch new messages first
+    "$dir"/gitchat-fetch "$@"
+  fi
   new_message
 }
 
