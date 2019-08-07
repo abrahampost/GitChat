@@ -30,7 +30,7 @@ new_message() {
   do_change "$file"
   git add "$file"
   git commit --quiet -F -
-  git push --quiet
+  git push --quiet &
 }
 
 is_not_empty() {
